@@ -2,8 +2,7 @@
 ------------------------------------------------------------------------------------------------------------------------------
 Liste des choses à faire:
 
-- Changer dans npt : Voir a quelle methode du site ca correspond, changer le nom, changer sa fonctionnalite
-- 
+- Modifier la partie bloc de singletons_nus 
 
 -------------------------------------------------------------------------------------------------------------------------------
 Pour les techniques à coder faut aller sur https://sudoku.com/fr/regles-du-sudoku/
@@ -13,7 +12,7 @@ Les methodes sont:
 - Derniere case libre - Finie mais a verifier
 - Derniere case restante  - Finie mais a verifier 
 - Dernier chiffre possible (marche comme Derniere case libre)  - Finie mais a verifier
-- Singletons nus
+- Singletons nus - PL travaille dessus
 - Paires nues
 - Triplets nus
 - Singletons caches
@@ -272,6 +271,35 @@ class Sudoku:
                 self.S[3*(i//3)+LastP[nombre][0]][3*(i%3)+LastP[nombre][1]]=nombre # Remplit la grille
                 self.S[3*(i//3)+LastP[nombre][0]][3*(i%3)+LastP[nombre][1]]=[]  # Vide la case dans la grille des possibles
 
+    def singletons_nus(self): 
+        for i in range(9): 
+            Ligne=self.ligneP(i) # Analyse des lignes de self.P
+            for j in range(9):
+                for k in range(9):
+                    if Ligne[j]==Ligne[k] and j!=k and len(Ligne[j])==2:
+                        Paire=Ligne[j]
+                        for nombre in Paire:
+                            for a in range(9):
+                                if nombre in Ligne[a] and a!=k and a!=j:
+                                    self.P[i][a].remove(nombre)
+            Colonne=self.colonneP(i) # Analyse des colonnes de self.P
+            for j in range(9):
+                for k in range(9):
+                    if Colonne[j]==Colonne[k] and j!=k and len(Colonne[j])==2:
+                        Paire=Colonne[j]
+                        for nombre in Paire:
+                            for a in range(9):
+                                if nombre in Colonne[a]  and a!=k and a!=j:
+                                    self.P[a][i].remove(nombre)
+            Bloc=self.blocP(i) # À modifier
+            for j in range(9):
+                for k in range(9):
+                    if Bloc[j//3][j%3]==Bloc[k//3][k%3] and (j//3!=k//3 and j%3!=k%3) and len(Bloc[j//3])==2:
+                        Paire=Bloc[j//3][j%3]
+                        for nombre in Paire:
+                            for b in range(9):
+                                if nombre in Bloc[b//3][b%3] and Bloc[b//3][b%3]!=Bloc[j//3][j%3] and Bloc[b//3][b%3]!=Bloc[k//3][k%3]:
+                                    self.P[(i//3)*3+b//3][(i%3)*3+b%3].remove(nombre)
 
 
 
