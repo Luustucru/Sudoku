@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------------------------------------------------
 Liste des choses à faire:
 
-- Modifier la partie bloc de singletons_nus 
+- Modifier la partie bloc de singletons_nus - PL
 
 -------------------------------------------------------------------------------------------------------------------------------
 Pour les techniques à coder faut aller sur https://sudoku.com/fr/regles-du-sudoku/
@@ -34,7 +34,7 @@ Et les blocs sont numérotés comme ca :
 3  |  4  |  5
 --------------
 6  |  7  |  8
-   
+    
 
 Aussi, pour ne pas avoir a raffraichir la grille des possibles entre chaque methode effectuee, 
 il faudrait que la methode la mette a jour si quelque chose a ete modifie
@@ -300,40 +300,6 @@ class Sudoku:
                             for b in range(9):
                                 if nombre in Bloc[b//3][b%3] and Bloc[b//3][b%3]!=Bloc[j//3][j%3] and Bloc[b//3][b%3]!=Bloc[k//3][k%3]:
                                     self.P[(i//3)*3+b//3][(i%3)*3+b%3].remove(nombre)
-
-
-
-    def npt(self): # Il faut modifier celle la - On la supprime pas au cas ou mais il faudrait la copier/coller et la modifier
-        for i in range(9): 
-            Ligne=self.ligneP(i) # Analyse des lignes de self.P
-            for j in range(9):
-                for k in range(9):
-                    if Ligne[j]==Ligne[k] and j!=k and (len(Ligne[j])==2 or len(Ligne[j])==3):
-                        PairOrTriple=Ligne[j]
-                        for nombre in PairOrTriple:
-                            for a in range(9):
-                                if nombre in Ligne[a] and Ligne[a]!=Ligne[k] and Ligne[a]!=Ligne[j]:
-                                    self.P[i][a].remove(nombre)
-            Colonne=self.colonneP(i) # Analyse des colonnes de self.P
-            for j in range(9):
-                for k in range(9):
-                    if Colonne[j]==Colonne[k] and j!=k and (len(Colonne[j])==2 or len(Colonne[j])==3):
-                        PairOrTriple=Colonne[j]
-                        for nombre in PairOrTriple:
-                            for a in range(9):
-                                if nombre in Colonne[a]  and Colonne[a]!=Colonne[k] and Colonne[a]!=Colonne[j]:
-                                    self.P[a][i].remove(nombre)
-            Bloc=self.blocP(i) # Analyse des blocs de self.P
-            for j in range(9):
-                for k in range(3):
-                    for p in range(3):
-                        if Bloc[j//3][j%3]==Bloc[k][p] and j//3!=k and j%3!=p and (len(Bloc[j//3])==2 or len(Bloc[j%3])==3):
-                            PairOrTriple=Bloc[j//3][j%3]
-                            for nombre in PairOrTriple:
-                                for b in range(3):
-                                    for c in range(3):
-                                        if nombre in Bloc[b][c] and Bloc[b][c]!=Bloc[j//3][j%3]:
-                                            self.P[i][(i%3)*3+b].remove(nombre)
                             
 
                 
